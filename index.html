@@ -1,0 +1,2700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moundhir Bachene — Flutter Engineer & Mobile Product Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080b10;
+      --bg2: #0d1117;
+      --bg3: #131920;
+      --surface: #161d26;
+      --border: #1e2a38;
+      --border2: #243040;
+      --accent: #00d4ff;
+      --accent-dim: rgba(0, 212, 255, 0.08);
+      --green: #00ff9d;
+      --orange: #ff7b35;
+      --purple: #b57bff;
+      --text: #e8edf2;
+      --text2: #8fa3b8;
+      --text3: #506070;
+      --serif: 'DM Serif Display', serif;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Outfit', sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: clip;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.3
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(8, 11, 16, 0.97), transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(30, 42, 56, 0.4);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text);
+      letter-spacing: 0.06em;
+      text-decoration: none;
+    }
+
+    .nav-logo em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text2);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-cta {
+      color: var(--accent) !important;
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      padding: 7px 18px;
+      border-radius: 2px;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent-dim) !important;
+    }
+
+    /* BANNER */
+    .avail-banner {
+      background: linear-gradient(90deg, rgba(0, 255, 157, 0.05), rgba(0, 212, 255, 0.04));
+      border-bottom: 1px solid rgba(0, 255, 157, 0.12);
+      padding: 12px 48px;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 140px 48px 100px;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(0, 212, 255, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 255, 0.025) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 20%, transparent 100%);
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -300px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 700px;
+      background: radial-gradient(ellipse, rgba(0, 212, 255, 0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 1000px;
+      text-align: center;
+    }
+
+    .hero-photo-wrap {
+      margin: 0 auto 28px;
+      width: 136px;
+      height: 136px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 212, 255, 0.4);
+      box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.08), 0 8px 32px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      background: var(--surface);
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .hero-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid var(--border2);
+      background: var(--accent-dim);
+      padding: 6px 18px;
+      border-radius: 100px;
+      margin-bottom: 36px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(46px, 6.5vw, 82px);
+      font-weight: 400;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+      animation: fadeUp 0.5s 0.08s ease both;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 1.8vw, 19px);
+      color: var(--text2);
+      max-width: 620px;
+      margin: 0 auto 14px;
+      line-height: 1.75;
+      animation: fadeUp 0.5s 0.16s ease both;
+    }
+
+    .hero-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 44px;
+      animation: fadeUp 0.5s 0.22s ease both;
+    }
+
+    .hero-name span {
+      color: var(--text2);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.5s 0.28s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      padding: 13px 28px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.35);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border2);
+      color: var(--text2);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.07em;
+      padding: 13px 28px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 52px;
+      margin-top: 72px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.5s 0.36s ease both;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 40px;
+      font-style: italic;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 8px;
+      display: block;
+    }
+
+    /* SHARED */
+    .sec {
+      padding: 112px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      height: 1px;
+      width: 36px;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4vw, 52px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 18px;
+    }
+
+    h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .sec-intro {
+      font-size: 17px;
+      color: var(--text2);
+      max-width: 540px;
+      line-height: 1.75;
+      margin-bottom: 52px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* POSITIONING STRIP */
+    .pos-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 48px;
+    }
+
+    .pos-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr 1px 1fr;
+      align-items: stretch;
+    }
+
+    .pos-item {
+      padding: 0 44px;
+      text-align: center;
+    }
+
+    .pos-item:first-child {
+      padding-left: 0;
+      text-align: left;
+    }
+
+    .pos-item:last-child {
+      padding-right: 0;
+      text-align: right;
+    }
+
+    .pos-divider {
+      background: var(--border);
+    }
+
+    .pos-icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .pos-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .pos-desc {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.65;
+    }
+
+    /* EXPERTISE GRID */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .exp-card {
+      background: var(--bg2);
+      padding: 34px;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .exp-card:hover {
+      background: var(--surface);
+    }
+
+    .exp-card:hover::before {
+      opacity: 1;
+    }
+
+    .exp-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .exp-title {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .exp-desc {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.65;
+    }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      background: var(--accent-dim);
+      padding: 3px 9px;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    .tag.or {
+      color: var(--orange);
+      border-color: rgba(255, 123, 53, 0.2);
+      background: rgba(255, 123, 53, 0.06);
+    }
+
+    .tag.gr {
+      color: var(--green);
+      border-color: rgba(0, 255, 157, 0.2);
+      background: rgba(0, 255, 157, 0.06);
+    }
+
+    .tag.pu {
+      color: var(--purple);
+      border-color: rgba(181, 123, 255, 0.2);
+      background: rgba(181, 123, 255, 0.06);
+    }
+
+    /* CASE STUDIES */
+    .cases-wrap {
+      padding: 112px 0;
+    }
+
+    .cases-head {
+      padding: 0 48px;
+      max-width: 1200px;
+      margin: 0 auto 52px;
+    }
+
+    .cases-list {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: visible;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .case-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 44px;
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 52px;
+      align-items: start;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: visible;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .case-card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .case-card:hover {
+      border-color: var(--border2);
+    }
+
+    .case-card:hover::after {
+      opacity: 1;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--green);
+      border: 1px solid rgba(0, 255, 157, 0.2);
+      background: rgba(0, 255, 157, 0.06);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .live-badge::before {
+      content: '●';
+      font-size: 7px;
+      animation: pulse 2s infinite;
+    }
+
+    .case-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .case-title {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .case-sub {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .sr {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text2);
+      margin-bottom: 5px;
+    }
+
+    .sr span:first-child {
+      color: var(--text3);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      min-width: 52px;
+    }
+
+    .as-links {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .as-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text2);
+      border: 1px solid var(--border2);
+      background: var(--bg3);
+      padding: 7px 14px;
+      border-radius: 3px;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .as-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .clabel {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+
+    .ctext {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.72;
+    }
+
+    .cblock {
+      margin-bottom: 26px;
+    }
+
+    .case-card>div {
+      min-width: 0;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .cbullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .cbullets li {
+      font-size: 13px;
+      color: var(--text2);
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      line-height: 1.6;
+      min-width: 0;
+    }
+
+    .cbullets li::before {
+      content: '→';
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .arch-diag {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 18px 20px;
+      margin: 14px 0;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--text2);
+      line-height: 1.9;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+
+    .arch-diag .nd {
+      color: var(--accent);
+    }
+
+    .arch-diag .ar {
+      color: var(--text3);
+    }
+
+    .arch-diag .nt {
+      color: var(--orange);
+    }
+
+    .arch-diag .cm {
+      color: var(--text3);
+      font-size: 11px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 26px;
+    }
+
+    .met {
+      background: var(--bg3);
+      padding: 16px 18px;
+      text-align: center;
+    }
+
+    .met-val {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-style: italic;
+      color: var(--green);
+      display: block;
+      line-height: 1;
+    }
+
+    .met-lbl {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--text3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 5px;
+    }
+
+    /* SCREENSHOT GALLERIES */
+    .ss-section {
+      margin-top: 32px;
+    }
+
+    .ss-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ss-label::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--text3);
+    }
+
+    .ss-label::after {
+      content: '← drag to scroll →';
+      font-size: 9px;
+      color: var(--text3);
+      letter-spacing: 0.06em;
+      opacity: 0.6;
+    }
+
+    .ss-gallery {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      overflow-y: visible;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-x;
+    }
+
+    .ss-gallery.dragging {
+      cursor: grabbing;
+      scroll-snap-type: none;
+    }
+
+    .ss-gallery::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .ss-gallery::-webkit-scrollbar-track {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .ss-gallery::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+      opacity: 0.7;
+    }
+
+    .ss-gallery::-webkit-scrollbar-thumb:hover {
+      background: var(--green);
+    }
+
+    .ss-frame {
+      flex-shrink: 0;
+      width: 148px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border2);
+      background: var(--bg3);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      scroll-snap-align: start;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: zoom-in;
+    }
+
+    .ss-frame:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65);
+    }
+
+    .ss-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.94);
+      z-index: 10000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px 80px;
+      gap: 16px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-height: 75vh;
+      max-width: 92vw;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
+      flex-shrink: 0;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 36px;
+      color: var(--text2);
+      cursor: pointer;
+      font-family: var(--mono);
+      line-height: 1;
+      transition: color 0.2s;
+      z-index: 1;
+      padding: 8px;
+    }
+
+    .lightbox-close:hover {
+      color: var(--accent);
+    }
+
+    .lightbox-caption {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text2);
+      letter-spacing: 0.08em;
+      text-align: center;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      max-width: 88vw;
+      line-height: 1.6;
+    }
+
+    /* ARCHITECTURE */
+    .arch-bg {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 112px 48px;
+    }
+
+    .arch-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .arch-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .arch-item {
+      display: flex;
+      gap: 16px;
+      align-items: start;
+      padding: 20px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      transition: border-color 0.2s;
+    }
+
+    .arch-item:hover {
+      border-color: var(--accent);
+    }
+
+    .arch-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .arch-item-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .arch-item-desc {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    .code-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      line-height: 1.85;
+    }
+
+    .code-hdr {
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cdot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .cdot:nth-child(1) {
+      background: #ff5f57
+    }
+
+    .cdot:nth-child(2) {
+      background: #febc2e
+    }
+
+    .cdot:nth-child(3) {
+      background: #28c840
+    }
+
+    .cfn {
+      margin-left: 8px;
+      color: var(--text3);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+
+    .cbody {
+      padding: 22px;
+      overflow-x: auto;
+    }
+
+    .cbody .kw {
+      color: #7eb8f7
+    }
+
+    .cbody .cl {
+      color: #f0b37e
+    }
+
+    .cbody .fn {
+      color: #7dd9a0
+    }
+
+    .cbody .cm {
+      color: var(--text3)
+    }
+
+    .cbody .sy {
+      color: var(--text2)
+    }
+
+    .cbody .pr {
+      color: #c4a3f7
+    }
+
+    /* STACK */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    .stack-cell {
+      background: var(--bg2);
+      padding: 26px 30px;
+      transition: background 0.2s;
+    }
+
+    .stack-cell:hover {
+      background: var(--surface);
+    }
+
+    .stack-cat {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stack-items {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .stack-item {
+      font-size: 13px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stack-item::before {
+      content: '';
+      width: 3px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* TESTIMONIALS */
+    .t-product-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text2);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .t-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      flex-shrink: 0;
+    }
+
+    .t-appstore-link {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      padding: 3px 10px;
+      border-radius: 2px;
+      text-decoration: none;
+      margin-left: auto;
+      transition: background 0.2s;
+    }
+
+    .t-appstore-link:hover {
+      background: var(--accent-dim);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .t-card {
+      background: var(--bg2);
+      padding: 32px;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .t-card:hover {
+      background: var(--surface);
+    }
+
+    .t-wide {
+      grid-column: 1 / -1;
+    }
+
+    .t-featured {
+      border-top: 2px solid var(--accent);
+    }
+
+    .t-quote-mark {
+      font-family: var(--serif);
+      font-size: 64px;
+      color: var(--accent);
+      opacity: 0.15;
+      line-height: 1;
+      margin-bottom: -16px;
+    }
+
+    .t-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .t-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .t-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .t-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .t-role {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.06em;
+      margin-top: 2px;
+    }
+
+    .t-social-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 32px 0 16px;
+    }
+
+    .fb-screenshots-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .fb-img-wrap {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border2);
+      max-width: 480px;
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+
+    .fb-img-wrap:hover {
+      transform: scale(1.02);
+    }
+
+    .fb-screenshot {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 68px;
+      align-items: start;
+    }
+
+    .about-body p {
+      font-size: 16px;
+      color: var(--text2);
+      line-height: 1.8;
+      margin-bottom: 17px;
+    }
+
+    .about-body p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .about-body .lead {
+      font-size: 18px;
+    }
+
+    .sc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 26px;
+      margin-bottom: 12px;
+    }
+
+    .sc-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sc-list li {
+      font-size: 13px;
+      color: var(--text2);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .sc-list li::before {
+      content: '→';
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* LANG + CONTACT + FOOTER */
+    .lang-strip {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 28px 48px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .lang-item {
+      text-align: center;
+    }
+
+    .lang-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .lang-level {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .contact-wrap {
+      padding: 112px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-glow {
+      position: absolute;
+      bottom: -300px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(0, 212, 255, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-wrap h2 {
+      max-width: 680px;
+      margin: 20px auto 26px;
+    }
+
+    .contact-intro {
+      font-size: 16px;
+      color: var(--text2);
+      max-width: 520px;
+      margin: 0 auto 44px;
+      line-height: 1.75;
+    }
+
+    .contact-methods {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text2);
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      padding: 12px 24px;
+      border-radius: 2px;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .fc {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+      letter-spacing: 0.06em;
+    }
+
+    .fc span {
+      color: var(--accent);
+    }
+
+    @media(max-width:900px) {
+
+      /* Nav */
+      nav {
+        padding: 14px 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      /* Sections */
+      .sec,
+      .arch-bg,
+      .contact-wrap {
+        padding: 60px 20px;
+      }
+
+      .cases-wrap {
+        padding: 60px 0;
+      }
+
+      .cases-head,
+      .cases-list {
+        padding: 0 20px;
+      }
+
+      /* Hero */
+      .hero {
+        padding: 110px 20px 60px;
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: clamp(36px, 9vw, 54px);
+      }
+
+      .hero-sub {
+        font-size: 15px;
+      }
+
+      .hero-stats {
+        gap: 20px;
+        padding-top: 32px;
+        margin-top: 48px;
+      }
+
+      .stat-num {
+        font-size: 32px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-primary,
+      .btn-ghost {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+      }
+
+      /* Positioning strip */
+      .pos-strip {
+        padding: 40px 20px;
+      }
+
+      .pos-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .pos-divider {
+        display: none;
+      }
+
+      .pos-item {
+        padding: 0;
+        text-align: left;
+      }
+
+      /* Grids */
+      .exp-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stack-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .arch-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      /* Case cards */
+      .case-card {
+        grid-template-columns: 1fr !important;
+        gap: 24px;
+        padding: 24px 16px;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .metrics {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      /* Screenshots */
+      .ss-frame {
+        width: 130px;
+      }
+
+      .ss-gallery {
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+
+      /* Lightbox on mobile */
+      .lightbox {
+        padding: 50px 16px 70px;
+      }
+
+      .lightbox img {
+        max-height: 65vh;
+        max-width: 96vw;
+      }
+
+      .lightbox-caption {
+        font-size: 11px;
+        padding: 8px 14px;
+        max-width: 96vw;
+      }
+
+      .lightbox-close {
+        top: 12px;
+        right: 14px;
+        font-size: 30px;
+      }
+
+      /* Social reviews */
+      .fb-screenshots-row {
+        flex-direction: column;
+      }
+
+      .fb-img-wrap {
+        max-width: 100%;
+      }
+
+      /* Text sizes */
+      h2 {
+        font-size: clamp(28px, 7vw, 42px);
+      }
+
+      .sec-intro {
+        font-size: 15px;
+      }
+
+      .hero-name {
+        font-size: 11px;
+      }
+
+      .hero-photo-wrap {
+        width: 80px;
+        height: 80px;
+      }
+
+      /* Footer */
+      footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 20px;
+      }
+
+      /* Code block */
+      .code-block {
+        font-size: 10px;
+      }
+
+      .cbody pre {
+        font-size: 10px;
+      }
+
+      /* Contact */
+      .contact-methods {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contact-link {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+      }
+
+      .ss-section {
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      .ss-gallery {
+        max-width: 100%;
+      }
+
+      .cbullets li {
+        font-size: 12px;
+      }
+
+      .arch-diag {
+        font-size: 10px;
+        padding: 12px;
+      }
+
+      .case-card>div:first-child {
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    @media(max-width:600px) {
+      .case-card {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+        padding: 20px 14px;
+      }
+
+      .ss-section {
+        margin-top: 20px;
+      }
+
+      .ss-gallery {
+        gap: 8px;
+      }
+
+      .ss-frame {
+        width: 110px;
+        border-radius: 10px;
+      }
+
+      .metrics {
+        grid-template-columns: 1fr !important;
+      }
+
+      .arch-diag {
+        font-size: 10px;
+        padding: 14px;
+      }
+    }
+
+    @media(max-width:480px) {
+      .stack-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr 1fr;
+        display: grid;
+        gap: 16px;
+      }
+
+      .exp-card {
+        padding: 24px 18px;
+      }
+
+      .t-card {
+        padding: 22px 18px;
+      }
+
+      .case-card {
+        padding: 22px 16px;
+      }
+
+      .ss-frame {
+        width: 115px;
+      }
+
+      .lang-strip {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">×</span>
+    <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <div class="avail-banner">● &nbsp; Open to freelance, remote & on-site roles — willing to relocate · Flutter Engineer
+    · Mobile Product Builder</div>
+
+  <nav>
+    <a href="#" class="nav-logo">Moundhir <em>Bachene</em></a>
+    <ul class="nav-links">
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div
+    style="position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:140px 48px 100px;">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-photo-wrap">
+        <img src="images/profile.jpg" alt="Moundhir Bachene"
+          onerror="this.parentElement.style.background='var(--surface)'">
+      </div>
+      <div class="hero-badge">
+        <div class="badge-dot"></div>Flutter Engineer · Mobile Product Builder
+      </div>
+      <h1>5 apps shipped.<br>Real businesses running<em> on them today.</em></h1>
+      <!-- <h1>I build mobile systems<br>that <em>run businesses.</em></h1> -->
+      <p class="hero-sub">Flutter Developer with 4+ years of professional experience building production-ready mobile
+        systems — specializing in offline-first design, Clean Architecture, and financial logic. Delivered
+        distribution, inventory, and food delivery platforms with hardware integrations and live App Store launches.</p>
+      <div class="hero-name"><span>Moundhir Bachene</span> · MSc IT · Algiers, Algeria</div>
+      <div class="hero-actions">
+        <a href="#work" class="btn-primary">View Case Studies →</a>
+        <a href="images/resume_flutter.pdf" download class="btn-ghost">↓ Download CV</a>
+        <a href="https://apps.apple.com/us/app/moody-food-mood/id6751051634" target="_blank" class="btn-ghost">🍎 Live
+          on App Store</a>
+        <a href="#contact" class="btn-ghost">Start a Project</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><span class="stat-num">4</span><span class="stat-label">Production Systems Built</span>
+        </div>
+        <div class="stat-item"><span class="stat-num">2</span><span class="stat-label">Apps Live on App Store</span>
+        </div>
+        <div class="stat-item"><span class="stat-num">2+</span><span class="stat-label">Years Flutter & Dart</span>
+        </div>
+        <div class="stat-item"><span class="stat-num">MSc</span><span class="stat-label">Fundamental Informatics &
+            IT</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POSITIONING STRIP -->
+  <div class="pos-strip reveal">
+    <div class="pos-inner">
+      <div class="pos-item">
+        <span class="pos-icon">⚙️</span>
+        <div class="pos-title">Architecture-First</div>
+        <p class="pos-desc">I design the data model, sync strategy, and state flow before writing a single widget.
+          Domain logic doesn't live in the UI layer.</p>
+      </div>
+      <div class="pos-divider"></div>
+      <div class="pos-item">
+        <span class="pos-icon">📦</span>
+        <div class="pos-title">Full Product Owner</div>
+        <p class="pos-desc">I've owned complete product cycles — roadmap, architecture, QA, App Store deployment, and
+          user onboarding. Engineering and product thinking, unified.</p>
+      </div>
+      <div class="pos-divider"></div>
+      <div class="pos-item">
+        <span class="pos-icon">🔌</span>
+        <div class="pos-title">Full-Stack Integrator</div>
+        <p class="pos-desc">Bluetooth printing, GPS tagging, barcode scanning, biometrics, PDF generation, enterprise
+          XML sync — I own the full hardware-to-cloud delivery chain.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERTISE -->
+  <div class="sec" id="expertise">
+    <div class="section-label">Core Expertise</div>
+    <h2>Engineering for<br><em>real constraints.</em></h2>
+    <p class="sec-intro">The challenges most Flutter developers avoid — offline resilience, sync conflict resolution,
+      multi-role ecosystems — are my core specialization.</p>
+    <div class="exp-grid">
+      <div class="exp-card reveal"><span class="exp-num">01</span>
+        <div class="exp-title">Offline-First Architecture</div>
+        <p class="exp-desc">Local-first data with SQLite/Drift, transactional integrity, queue-based mutation sync, and
+          XML DATAPACKET enterprise exchange. Built for field teams operating at zero connectivity.</p>
+        <div class="exp-tags"><span class="tag">SQLite / Drift</span><span class="tag gr">Sync Engine</span><span
+            class="tag or">XML DATAPACKET</span></div>
+      </div>
+      <div class="exp-card reveal"><span class="exp-num">02</span>
+        <div class="exp-title">Multi-Role App Ecosystems</div>
+        <p class="exp-desc">Designed and shipped paired apps serving distinct roles — Moody consumer + merchant, van
+          sales field agent + admin. Shared backends, divergent UX, synchronized state.</p>
+        <div class="exp-tags"><span class="tag">Dual-App Systems</span><span class="tag or">Role-Based UX</span><span
+            class="tag">Firebase RTDB</span></div>
+      </div>
+      <div class="exp-card reveal"><span class="exp-num">03</span>
+        <div class="exp-title">Inventory & Financial Logic</div>
+        <p class="exp-desc">Relational schemas for inventory, suppliers, clients, and debt. Atomic financial
+          transactions, automated credit allocation, daily closing (Clôture) with cost-price-at-sale capture.</p>
+        <div class="exp-tags"><span class="tag gr">Atomic Transactions</span><span class="tag">Credit Mgmt</span><span
+            class="tag or">Clôture Workflow</span></div>
+      </div>
+      <div class="exp-card reveal"><span class="exp-num">04</span>
+        <div class="exp-title">Security & Device Access Control</div>
+        <p class="exp-desc">Activation key licensing, PIN + biometric authentication via local_auth, Firebase security
+          rules, and secure local persistence for apps protecting sensitive financial data.</p>
+        <div class="exp-tags"><span class="tag pu">Biometrics</span><span class="tag">Activation Keys</span><span
+            class="tag">Firebase Rules</span></div>
+      </div>
+      <div class="exp-card reveal"><span class="exp-num">05</span>
+        <div class="exp-title">Hardware & Peripheral Integration</div>
+        <p class="exp-desc">Bluetooth thermal printing, barcode/QR scanning, GPS geo-tagging, PDF generation —
+          production integrations for field receipts, stock scanning, and delivery logging.</p>
+        <div class="exp-tags"><span class="tag or">BT Printing</span><span class="tag">Barcode</span><span
+            class="tag gr">GPS · PDF</span></div>
+      </div>
+      <div class="exp-card reveal"><span class="exp-num">06</span>
+        <div class="exp-title">Mobile UX & Product <span
+            style="font-size:11px;color:var(--text3);font-weight:400;">(Prior Role)</span></div>
+        <p class="exp-desc">End-to-end mobile UX design for a Dubai/Algiers Web3 company — MPC wallet flows, NFT
+          marketplace QA (minting, rentals, royalties), WalletConnect integration, and DeFi protocol UX analysis.</p>
+        <div class="exp-tags"><span class="tag pu">Mobile UX</span><span class="tag">Product QA</span><span
+            class="tag">WalletConnect</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- CASE STUDIES -->
+  <div class="cases-wrap" id="work">
+    <div class="cases-head">
+      <div class="section-label">Selected Work</div>
+      <h2>Production systems,<br><em>real outcomes.</em></h2>
+      <p class="sec-intro" style="margin-bottom:0;">Four products built from scratch — each solving a different set of
+        real-world mobile engineering constraints.</p>
+    </div>
+    <div class="cases-list">
+
+      <!-- MOODY -->
+      <div class="case-card reveal">
+        <div>
+          <div class="live-badge">Live · iOS & Android</div>
+          <span class="case-num">Case Study 01</span>
+          <div class="case-title">Moody — Food & Mood</div>
+          <div class="case-sub">Consumer + Merchant Dual-App</div>
+          <div class="sr"><span>Period</span>Jan 2025 – Present</div>
+          <div class="sr"><span>Stack</span>Flutter, Riverpod</div>
+          <div class="sr"><span>Backend</span>Firebase (Auth, RTDB, FCM)</div>
+          <div class="sr"><span>Target</span>Gen Z · Local Restaurants</div>
+          <div class="sr"><span>Role</span>Founder & Lead Developer</div>
+          <div class="as-links">
+            <a href="https://apps.apple.com/us/app/moody-food-mood/id6751051634" target="_blank" class="as-btn">🍎 Moody
+              — Consumer App</a>
+            <a href="https://apps.apple.com/dz/app/moody-business/id6755526842" target="_blank" class="as-btn">🍎 Moody
+              Business — Merchant App</a>
+            <a href="https://www.moody-food.com" target="_blank" class="as-btn">🤖 Android APK — moody-food.com</a>
+          </div>
+        </div>
+        <div>
+          <div class="cblock">
+            <div class="clabel">The Product</div>
+            <p class="ctext">A Gen Z-first food delivery platform built around mood and personality. Two live apps —
+              consumer and merchant — available on iOS (App Store) and Android (direct download via moody-food.com),
+              connected by a shared Firebase backend with real-time order orchestration. Full product ownership:
+              roadmap, architecture, development, QA, and deployment.</p>
+          </div>
+          <div class="cblock">
+            <div class="clabel">What I Built</div>
+            <ul class="cbullets">
+              <li>End-to-end order lifecycle on merchant side: accept → prepare → ready → complete, with real-time FCM
+                push at each state change</li>
+              <li>Multi-restaurant cart, delivery/pickup, location-based filtering, and live order tracking on consumer
+                side</li>
+              <li>Guest mode with seamless cart, history, and preference migration to registered account</li>
+              <li>Merchant tools: menu management, stock toggles, discount engine, and promo code system</li>
+              <li>Custom in-app update system, image caching, debounced search, and lazy loading for performance</li>
+            </ul>
+          </div>
+          <div class="cblock">
+            <div class="clabel">Architecture</div>
+            <div class="arch-diag">
+              <span class="nd">[Consumer App]</span> <span class="ar">── place_order ──►</span> <span
+                class="nd">[Firebase RTDB]</span><br>
+              <span class="cm"> │ FCM trigger</span><br>
+              <span class="nd">[Business App]</span> <span class="ar">◄── new_order event ──</span> <span
+                class="nt">[Restaurant notified instantly]</span><br>
+              <span class="ar">status_update ──►</span> <span class="nd">[RTDB]</span> <span class="ar">──► FCM
+                ──►</span> <span class="nt">[Consumer sees live status]</span>
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="met"><span class="met-val">2</span><span class="met-lbl">Live Apps · iOS & Android</span></div>
+            <div class="met"><span class="met-val">v1.4.1</span><span class="met-lbl">Actively Maintained</span></div>
+            <div class="met"><span class="met-val">iOS + APK</span><span class="met-lbl">App Store & Direct
+                Download</span></div>
+          </div>
+          <!-- Moody Consumer Screenshots -->
+          <div class="ss-section">
+            <div class="ss-label">Moody — Consumer App</div>
+            <div class="ss-gallery">
+              <div class="ss-frame"><img src="images/moody_welcome.jpg" alt="Moody welcome"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/moody_home.jpg" alt="Moody home" onclick="openLightbox(this)">
+              </div>
+              <div class="ss-frame"><img src="images/moody_order.png" alt="Moody ordering" onclick="openLightbox(this)">
+              </div>
+              <div class="ss-frame"><img src="images/moody_cart.png" alt="Moody cart" onclick="openLightbox(this)">
+              </div>
+              <div class="ss-frame"><img src="images/moody_fav.png" alt="Moody favorites" onclick="openLightbox(this)">
+              </div>
+              <div class="ss-frame"><img src="images/moody_fun.png" alt="Moody mascot UX" onclick="openLightbox(this)">
+              </div>
+              <div class="ss-frame"><img src="images/moody_mood.png" alt="Mood avatar picker"
+                  onclick="openLightbox(this)"></div>
+            </div>
+          </div>
+          <!-- Moody Business Screenshots -->
+          <div class="ss-section" style="margin-top:20px;">
+            <div class="ss-label">Moody Business — Merchant App</div>
+            <div class="ss-gallery">
+              <div class="ss-frame"><img src="images/biz_splash.jpg" alt="Moody Business splash"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/biz_login.jpg" alt="Moody Business login"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/biz_dash.jpg" alt="Moody Business dashboard"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/biz_orders.jpg" alt="Moody Business completed orders"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/biz_settings.jpg" alt="Moody Business settings"
+                  onclick="openLightbox(this)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VAN DISTRIBUTION OFFLINE -->
+      <div class="case-card reveal">
+        <div>
+          <span class="case-num">Case Study 03</span>
+          <div class="case-title">Van Distribution<br><small
+              style="font-size:15px;font-family:var(--sans);font-weight:300;color:var(--text2)">Offline-First / XML
+              Sync</small></div>
+          <div class="case-sub">DSD · Field Sales · Zero Connectivity</div>
+          <div class="sr"><span>Period</span>Nov 2025 – Jan 2026</div>
+          <div class="sr"><span>Stack</span>Flutter, SQLite (sqflite)</div>
+          <div class="sr"><span>Sync</span>XML DATAPACKET (AM/PM)</div>
+          <div class="sr"><span>Target</span>Distributors & Wholesalers</div>
+          <div class="sr"><span>HW</span>BT Print · Barcode · GPS</div>
+        </div>
+        <div>
+          <div class="cblock">
+            <div class="clabel">The Challenge</div>
+            <p class="ctext">Field distribution teams operate in warehouses and remote delivery routes with zero
+              reliable connectivity. They still need to track van stock, record every sale, manage client accounts,
+              handle payments, and reconcile with the central desktop system — all before end of day.</p>
+          </div>
+          <div class="cblock">
+            <div class="clabel">XML Sync Architecture</div>
+            <div class="arch-diag">
+              <span class="nt">MORNING — Import from Desktop</span><br>
+              <span class="nd">[Desktop ERP]</span> <span class="ar">── DATAPACKET XML ──►</span> <span
+                class="nd">[Mobile SQLite]</span><br>
+              <span class="cm"> → Van stock load, client list, pricing, route data</span><br><br>
+              <span class="nt">EVENING — Export to Desktop</span><br>
+              <span class="nd">[Mobile App]</span> <span class="ar">── DATAPACKET XML ──►</span> <span
+                class="nd">[Desktop ERP]</span><br>
+              <span class="cm"> → Sales, payments, inventory deltas, balance reconciliation</span>
+            </div>
+          </div>
+          <div class="cblock">
+            <div class="clabel">Key Engineering Work</div>
+            <ul class="cbullets">
+              <li>Complete DSD operations offline: sales orders, client payments, returns, multi-depot inventory (unit +
+                carton)</li>
+              <li>Enterprise XML sync in DATAPACKET format — morning import of van load, evening export of all
+                transactions</li>
+              <li>Ledger-style financial modules: daily CA tracking, payment allocation, balance carry-forward</li>
+              <li>GPS geo-tagging on deliveries, Bluetooth thermal printing, barcode scanning for rapid stock operations
+              </li>
+            </ul>
+          </div>
+          <div class="metrics">
+            <div class="met"><span class="met-val">0%</span><span class="met-lbl">Connectivity Required</span></div>
+            <div class="met"><span class="met-val">XML</span><span class="met-lbl">Enterprise DATAPACKET</span></div>
+            <div class="met"><span class="met-val">AM/PM</span><span class="met-lbl">Structured Sync Cycle</span></div>
+          </div>
+          <!-- Van Screenshots -->
+          <div class="ss-section">
+            <div class="ss-label">App Screenshots</div>
+            <div class="ss-gallery">
+              <div class="ss-frame"><img src="images/van_home.jpg" alt="Van dashboard" onclick="openLightbox(this)">
+              </div>
+              <div class="ss-frame"><img src="images/van_stock.jpg" alt="Van stock" onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/van_clients.jpg" alt="Client list" onclick="openLightbox(this)">
+              </div>
+              <div class="ss-frame"><img src="images/van_client_detail.jpg" alt="Client detail & credit"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/van_sell.jpg" alt="New sale screen" onclick="openLightbox(this)">
+              </div>
+              <div class="ss-frame"><img src="images/van_product.jpg" alt="Product detail" onclick="openLightbox(this)">
+              </div>
+              <div class="ss-frame"><img src="images/van_settings.jpg" alt="Navigation drawer"
+                  onclick="openLightbox(this)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STOCK MANAGER -->
+      <div class="case-card reveal">
+        <div>
+          <span class="case-num">Case Study 02</span>
+          <div class="case-title">Stock Manager</div>
+          <div class="case-sub">Offline Retail Inventory System</div>
+          <div class="sr"><span>Period</span>Aug – Nov 2025</div>
+          <div class="sr"><span>Stack</span>Flutter, SQLite</div>
+          <div class="sr"><span>Target</span>Retail / Wholesale Stores</div>
+          <div class="sr"><span>Access</span>Key + PIN + Biometrics</div>
+          <div class="sr"><span>Output</span>PDF + BT Thermal Print</div>
+        </div>
+        <div>
+          <div class="cblock">
+            <div class="clabel">The Problem</div>
+            <p class="ctext">Retail and wholesale stores suffer three persistent problems: inventory mismatches from
+              unrecorded sales, slow error-prone daily cash closing, and shared devices with no real access control.
+              This system was built to solve all three — entirely offline, zero cloud dependency.</p>
+          </div>
+          <div class="cblock">
+            <div class="clabel">Engineering Depth</div>
+            <ul class="cbullets">
+              <li>Relational SQLite schema covering products, suppliers, clients, purchase orders, sales, and debt
+                ledgers with referential integrity enforced at application layer</li>
+              <li>Advanced credit management: automated allocation of incoming payments across outstanding balances and
+                advances, with full ledger audit trail</li>
+              <li>Daily Clôture workflow capturing cost price at exact time of sale — accurate daily P&L even when
+                purchase prices fluctuate throughout the day</li>
+              <li>Three-layer security: activation key (device licensing) → PIN (user auth) → biometric unlock — each
+                layer independently configured</li>
+              <li>Dynamic PDF receipt generation and Bluetooth thermal printer integration for on-the-spot invoicing
+              </li>
+            </ul>
+          </div>
+          <div class="metrics">
+            <div class="met"><span class="met-val">100%</span><span class="met-lbl">Offline Capable</span></div>
+            <div class="met"><span class="met-val">3-Layer</span><span class="met-lbl">Key + PIN + Bio Auth</span></div>
+            <div class="met"><span class="met-val">Atomic</span><span class="met-lbl">Financial Transactions</span>
+            </div>
+          </div>
+          <!-- Stock Manager Screenshots -->
+          <div class="ss-section">
+            <div class="ss-label">App Screenshots — Stock Manager</div>
+            <div class="ss-gallery">
+              <div class="ss-frame"><img src="images/sm_stock_entry.jpg"
+                  alt="Entrée Stock — article search & qty/price entry" onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/sm_new_sale.jpg" alt="Nouvelle Vente — credit restant tracking"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/sm_home.jpg" alt="Stock Manager home — CA 70,380 DA"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/sm_check_stock.jpg" alt="Check Stock — 3 articles, 6,380 DA valeur"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/sm_supplier.jpg" alt="Entrée Stock — supplier selection"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/sm_purchase_history.jpg"
+                  alt="Historique des achats — 4,657 DA valeur" onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/sm_client.jpg" alt="Client detail — ventes & solde"
+                  onclick="openLightbox(this)"></div>
+              <div class="ss-frame"><img src="images/sm_clotures.jpg" alt="Historique des Clôtures — daily P&L"
+                  onclick="openLightbox(this)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VAN CLOUD -->
+      <div class="case-card reveal">
+        <div>
+          <span class="case-num">Case Study 04</span>
+          <div class="case-title">Van Distribution<br><small
+              style="font-size:15px;font-family:var(--sans);font-weight:300;color:var(--text2)">Cloud Sync /
+              Hybrid</small></div>
+          <div class="case-sub">DSD · Hybrid Offline-Cloud · BLoC</div>
+          <div class="sr"><span>Period</span>Oct 2024 – Mar 2025</div>
+          <div class="sr"><span>Stack</span>Flutter, BLoC</div>
+          <div class="sr"><span>Storage</span>SQLite + Firebase RTDB</div>
+          <div class="sr"><span>Pattern</span>Hybrid Eventual Consistency</div>
+          <div class="sr"><span>Cache</span>Custom TTL engine</div>
+        </div>
+        <div>
+          <div class="cblock">
+            <div class="clabel">The Challenge</div>
+            <p class="ctext">Fleet managers needed cloud visibility across multiple vans in near-real-time — while still
+              tolerating the same unreliable field connectivity. Solution: local SQLite as source of truth, Firebase
+              syncing opportunistically when connectivity permits.</p>
+          </div>
+          <div class="cblock">
+            <div class="clabel">Hybrid Architecture</div>
+            <ul class="cbullets">
+              <li>Hybrid storage: SQLite handles all writes and reads; a custom Firebase caching engine (TTL + memory
+                optimization) syncs to cloud opportunistically</li>
+              <li>Eventual consistency design — fleet managers see updates within seconds of connectivity restoration,
+                no data loss during offline periods</li>
+              <li>Atomic financial transaction logic: turnover, payment, and balance updates are never partially applied
+              </li>
+              <li>Real-time extension of desktop management software — inventory and order status visible across mobile
+                and PC simultaneously</li>
+            </ul>
+          </div>
+          <div class="metrics">
+            <div class="met"><span class="met-val">Hybrid</span><span class="met-lbl">SQLite + Firebase</span></div>
+            <div class="met"><span class="met-val">TTL</span><span class="met-lbl">Custom Cache Engine</span></div>
+            <div class="met"><span class="met-val">BLoC</span><span class="met-lbl">Repository Pattern</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ARCHITECTURE -->
+  <div class="arch-bg" id="architecture">
+    <div class="arch-inner">
+      <div>
+        <div class="section-label">Engineering Philosophy</div>
+        <h2>Architecture is a<br><em>product decision.</em></h2>
+        <p style="font-size:15px;color:var(--text2);line-height:1.8;margin:20px 0 0;">I design mobile systems the way
+          backend engineers design services — explicit boundaries, predictable state, and data models built for the
+          constraints that actually exist in the field.</p>
+        <div class="arch-list reveal">
+          <div class="arch-item">
+            <div class="arch-icon">🧱</div>
+            <div>
+              <div class="arch-item-title">Clean Architecture, Enforced</div>
+              <p class="arch-item-desc">Presentation → Domain → Data. UI that knows nothing about storage. Business
+                logic that knows nothing about Flutter widgets.</p>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-icon">🔄</div>
+            <div>
+              <div class="arch-item-title">State Machines for Complex Flows</div>
+              <p class="arch-item-desc">Order lifecycles, sync queues, and financial workflows modelled as explicit
+                state machines — no hidden transitions, no impossible states.</p>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-icon">📡</div>
+            <div>
+              <div class="arch-item-title">Sync-Safe Data Models</div>
+              <p class="arch-item-desc">Entities designed for sync from day one: transactional mutations, conflict
+                strategies baked into the schema, and audit trails for financial data.</p>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-icon">🔐</div>
+            <div>
+              <div class="arch-item-title">Security as a Feature</div>
+              <p class="arch-item-desc">Biometric gates, activation licensing, Firebase security rules, and encrypted
+                local persistence — first-class requirements, not afterthoughts.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="code-block reveal">
+          <div class="code-hdr">
+            <div class="cdot"></div>
+            <div class="cdot"></div>
+            <div class="cdot"></div><span class="cfn">daily_closing_service.dart</span>
+          </div>
+          <div class="cbody">
+            <pre><span class="cm">/// Daily Clôture — captures cost price at</span>
+<span class="cm">/// time of sale for accurate daily P&L.</span>
+<span class="cm">/// Atomic: no partial closes allowed.</span>
+
+<span class="kw">class</span> <span class="cl">DailyClosingService</span> {
+  <span class="kw">final</span> <span class="cl">SalesDao</span> _sales;
+  <span class="kw">final</span> <span class="cl">InventoryDao</span> _inventory;
+  <span class="kw">final</span> <span class="cl">Database</span> _db;
+
+  <span class="kw">Future</span>&lt;<span class="cl">ClosureResult</span>&gt; <span class="fn">executeClôture</span>({
+    <span class="kw">required</span> <span class="cl">DateTime</span> closingDate,
+  }) <span class="kw">async</span> {
+    <span class="kw">return</span> _db.<span class="fn">transaction</span>((<span class="sy">txn</span>) <span class="kw">async</span> {
+      <span class="kw">final</span> sales = <span class="kw">await</span> _sales
+        .<span class="fn">getUnclosed</span>(date: closingDate, txn: txn);
+
+      <span class="kw">double</span> turnover = <span class="sy">0</span>, cogs = <span class="sy">0</span>;
+
+      <span class="kw">for</span> (<span class="kw">final</span> sale <span class="kw">in</span> sales) {
+        <span class="cm">// Cost captured AT TIME OF SALE</span>
+        <span class="kw">final</span> cost = <span class="kw">await</span> _inventory
+          .<span class="fn">getCostAtDate</span>(
+            productId: sale.<span class="pr">productId</span>,
+            date: sale.<span class="pr">saleDate</span>,
+            txn: txn,
+          );
+        turnover += sale.<span class="pr">price</span> * sale.<span class="pr">qty</span>;
+        cogs += cost * sale.<span class="pr">qty</span>;
+        <span class="kw">await</span> _sales.<span class="fn">markClosed</span>(sale.<span class="pr">id</span>, txn: txn);
+      }
+
+      <span class="kw">return</span> <span class="cl">ClosureResult</span>(
+        turnover: turnover,
+        costOfGoods: cogs,
+        grossMargin: turnover - cogs,
+        closedAt: <span class="cl">DateTime</span>.<span class="fn">now</span>(),
+      );
+    });
+  }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STACK -->
+  <div class="sec" id="stack">
+    <div class="section-label">Technical Stack</div>
+    <h2>Tools I <em>actually use</em><br>in production.</h2>
+    <p class="sec-intro" style="margin-bottom:0;">Every item below has shipped in a real system.</p>
+    <div class="stack-grid reveal">
+      <div class="stack-cell">
+        <div class="stack-cat">Flutter & Dart</div>
+        <div class="stack-items">
+          <div class="stack-item">Flutter (iOS, Android)</div>
+          <div class="stack-item">Dart (null-safety)</div>
+          <div class="stack-item">Material 3</div>
+          <div class="stack-item">Flutter Flavors</div>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="stack-cat">State Management</div>
+        <div class="stack-items">
+          <div class="stack-item">Riverpod (primary)</div>
+          <div class="stack-item">BLoC / Cubit</div>
+          <div class="stack-item">Provider</div>
+          <div class="stack-item">State machines</div>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="stack-cat">Data & Storage</div>
+        <div class="stack-items">
+          <div class="stack-item">SQLite (sqflite, Drift)</div>
+          <div class="stack-item">Firebase Realtime DB</div>
+          <div class="stack-item">Firebase Firestore</div>
+          <div class="stack-item">Secure Storage</div>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="stack-cat">Firebase Services</div>
+        <div class="stack-items">
+          <div class="stack-item">Firebase Auth</div>
+          <div class="stack-item">FCM Push Notifications</div>
+          <div class="stack-item">Security Rules</div>
+          <div class="stack-item">Cloud Functions</div>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="stack-cat">Hardware Integrations</div>
+        <div class="stack-items">
+          <div class="stack-item">Bluetooth thermal printing</div>
+          <div class="stack-item">Barcode / QR scanning</div>
+          <div class="stack-item">GPS geo-tagging</div>
+          <div class="stack-item">Biometrics (local_auth)</div>
+          <div class="stack-item">PDF generation</div>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="stack-cat">Architecture</div>
+        <div class="stack-items">
+          <div class="stack-item">Clean Architecture</div>
+          <div class="stack-item">Repository Pattern</div>
+          <div class="stack-item">Offline-First Sync</div>
+          <div class="stack-item">XML DATAPACKET sync</div>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="stack-cat">Distribution</div>
+        <div class="stack-items">
+          <div class="stack-item">App Store (iOS)</div>
+          <div class="stack-item">TestFlight</div>
+          <div class="stack-item">Custom OTA updates</div>
+          <div class="stack-item">APK signing & dist.</div>
+          <div class="stack-item">Device activation keys</div>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="stack-cat">Web3 (Prior Role)</div>
+        <div class="stack-items">
+          <div class="stack-item">MPC wallet config</div>
+          <div class="stack-item">Token vesting contracts</div>
+          <div class="stack-item">NFT marketplace QA</div>
+          <div class="stack-item">WalletConnect</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- TESTIMONIALS -->
+  <div class="sec" id="testimonials">
+    <div class="section-label">Social Proof</div>
+    <h2>What people<br><em>actually say.</em></h2>
+    <p class="sec-intro">Unsolicited feedback from users, restaurant owners, and business clients across all three
+      products.</p>
+
+    <div class="t-product-label">
+      <span class="t-dot"></span>
+      <span>Moody — Consumer & Restaurant App</span>
+      <a href="https://apps.apple.com/us/app/moody-food-mood/id6751051634" target="_blank" class="t-appstore-link">🍎
+        Live on App Store ↗</a>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="t-card t-featured">
+        <div class="t-quote-mark">"</div>
+        <p class="t-text">I just discovered this and I can't begin to describe how grateful I felt to finally see a
+          business like this here in Médéa. The concept is incredibly creative and the app itself is beautifully
+          designed and thoughtfully made.</p>
+        <div class="t-author">
+          <div class="t-avatar">U</div>
+          <div>
+            <div class="t-name">App User</div>
+            <div class="t-role">Médéa, Algeria · via Instagram DM</div>
+          </div>
+        </div>
+      </div>
+      <div class="t-card">
+        <div class="t-quote-mark">"</div>
+        <p class="t-text">The app is very useful and professional. It genuinely helps a lot — I'm really happy that
+          something like this is finally available in our city.</p>
+        <div class="t-author">
+          <div class="t-avatar">U</div>
+          <div>
+            <div class="t-name">App User</div>
+            <div class="t-role">Local Customer · Médéa</div>
+          </div>
+        </div>
+      </div>
+      <div class="t-card">
+        <div class="t-quote-mark">"</div>
+        <p class="t-text">This app has been a real game changer for my restaurant. I can now accept orders instantly
+          without having to answer the phone for every single request.</p>
+        <div class="t-author">
+          <div class="t-avatar">R</div>
+          <div>
+            <div class="t-name">Restaurant Owner</div>
+            <div class="t-role">Moody Business Partner · Algeria</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-social-label">Comments from social media</div>
+    <div class="fb-screenshots-row">
+      <div class="fb-img-wrap"><img src="images/review_msg.jpg" class="fb-screenshot" onclick="openLightbox(this)">
+      </div>
+      <!--<div class="fb-img-wrap"><img src="images/review_1.jpg" class="fb-screenshot" onclick="openLightbox(this)"></div>-->
+      <div class="fb-img-wrap"><img src="images/review_2.jpg" class="fb-screenshot" onclick="openLightbox(this)"></div>
+      <div class="fb-img-wrap"><img src="images/review_3.jpg" class="fb-screenshot" onclick="openLightbox(this)"></div>
+      <div class="fb-img-wrap"><img src="images/review_4.jpg" class="fb-screenshot" onclick="openLightbox(this)"></div>
+      <div class="fb-img-wrap"><img src="images/review_5.jpg" class="fb-screenshot" onclick="openLightbox(this)"></div>
+    </div>
+
+    <div class="t-product-label" style="margin-top:64px;">
+      <span class="t-dot" style="background:var(--orange);box-shadow:0 0 8px var(--orange);"></span>
+      <span>Stock Manager — Retail Inventory System</span>
+    </div>
+    <div class="testimonials-grid reveal" style="grid-template-columns:1fr;">
+      <div class="t-card t-wide">
+        <div class="t-quote-mark">"</div>
+        <p class="t-text">I use this app in my store every single day. It's completely changed how I manage my business
+          — I can now instantly see what I've sold, how many items are left in stock, and calculate my profit at any
+          time.</p>
+        <div class="t-author">
+          <div class="t-avatar">S</div>
+          <div>
+            <div class="t-name">Store Owner</div>
+            <div class="t-role">Retail / Wholesale · Stock Manager User</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-product-label" style="margin-top:64px;">
+      <span class="t-dot" style="background:var(--purple);box-shadow:0 0 8px var(--purple);"></span>
+      <span>Van Distribution System — Field Sales App</span>
+    </div>
+    <div class="testimonials-grid reveal" style="grid-template-columns:1fr;">
+      <div class="t-card t-wide">
+        <div class="t-quote-mark">"</div>
+        <p class="t-text">The app is simple and easy to use — nothing like the complex systems we had before. I can load
+          the vans, check stock levels, add new clients, and start selling right away. Exactly what we needed in the
+          field.</p>
+        <div class="t-author">
+          <div class="t-avatar">D</div>
+          <div>
+            <div class="t-name">Field Sales Agent</div>
+            <div class="t-role">Distribution Operations · Van Sales System User</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ABOUT -->
+  <div class="sec" id="about">
+    <div class="section-label">About</div>
+    <h2>Moundhir <em>Bachene.</em></h2>
+    <div class="about-grid">
+      <div class="about-body">
+        <p class="lead">I'm a Flutter developer based in Algiers with a Master's degree in Fundamental Informatics & IT
+          from RUDN Moscow. I build mobile systems — not just mobile apps.</p>
+        <p>The distinction matters. An app displays information. A system <strong>runs an operation</strong>. The van
+          distribution system I built processes thousands of financial transactions entirely offline. The Stock Manager
+          enforces atomic inventory and credit logic that accountants depend on daily. Moody is a dual-sided marketplace
+          — two apps, one backend — live on the App Store right now.</p>
+        <p>My background spans <strong>Flutter engineering, product ownership, and blockchain/Web3</strong> — which
+          means I bring full-stack thinking to every project. I understand backend constraints, database design, and API
+          contracts well enough to build systems that work end-to-end.</p>
+        <p>Open to <strong>freelance projects, remote full-time positions, and on-site roles</strong> — and willing to
+          relocate if the opportunity is the right fit. Particularly interested in logistics, field operations, local
+          commerce, and any domain where mobile needs to work under real-world constraints.</p>
+      </div>
+      <div>
+        <div class="sc">
+          <div class="sc-title">Education</div>
+          <ul class="sc-list">
+            <li>MSc Fundamental Informatics & IT — RUDN University, Moscow (2019–2021)</li>
+            <li>BSc Computer Science — Yahia Fares University, Médéa (2015–2018)</li>
+          </ul>
+        </div>
+        <div class="sc">
+          <div class="sc-title">What I Build Best</div>
+          <ul class="sc-list">
+            <li>Offline-first field & logistics apps</li>
+            <li>Multi-role consumer/merchant ecosystems</li>
+            <li>Inventory & financial management systems</li>
+            <li>App Store products (end-to-end ownership)</li>
+            <li>Custom APK distribution & OTA updates</li>
+          </ul>
+        </div>
+        <div class="sc">
+          <div class="sc-title">Engagement Types</div>
+          <ul class="sc-list">
+            <li>Founding engineer at startups</li>
+            <li>Senior Flutter contractor</li>
+            <li>Greenfield product builds</li>
+            <li>Mobile architecture consulting</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lang-strip">
+    <div class="lang-item">
+      <div class="lang-name">Arabic</div>
+      <div class="lang-level">Native</div>
+    </div>
+    <div class="lang-item">
+      <div class="lang-name">English</div>
+      <div class="lang-level">Advanced · IELTS 7</div>
+    </div>
+    <div class="lang-item">
+      <div class="lang-name">French</div>
+      <div class="lang-level">Advanced</div>
+    </div>
+    <div class="lang-item">
+      <div class="lang-name">Russian</div>
+      <div class="lang-level">Upper-Intermediate</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- CONTACT -->
+  <div class="contact-wrap" id="contact">
+    <div class="contact-glow"></div>
+    <div class="section-label" style="justify-content:center;">Work Together</div>
+    <h2>Got a hard mobile<br><em>problem to solve?</em></h2>
+    <p class="contact-intro">I take on a small number of projects so I can give each one the engineering attention it
+      deserves. If you're building something with real constraints — let's talk.<br>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--text3);margin-top:8px;display:inline-block;">📍
+        Algiers, Algeria · GMT+1 · Usually responds within 24h</span>
+    </p>
+    <div class="contact-methods">
+      <a href="mailto:moundhir.bc@gmail.com" class="contact-link">✉ moundhir.bc@gmail.com</a>
+      <a href="https://www.linkedin.com/in/moundhir-bachene/" target="_blank" class="contact-link">in LinkedIn</a>
+      <a href="https://github.com/BacheneSoft" target="_blank" class="contact-link">⌥ GitHub</a>
+      <a href="https://apps.apple.com/us/app/moody-food-mood/id6751051634" target="_blank" class="contact-link">🍎 Moody
+        on App Store</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="fc">© 2026 Moundhir Bachene — Flutter Engineer & Mobile Product Builder · Algiers, DZ</div>
+    <div class="fc"><span>Available for work</span></div>
+  </footer>
+
+  <!-- LIGHTBOX JS -->
+
+  <script>
+    // ── Lightbox ──
+    function openLightbox(img) {
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox-caption').textContent = img.alt;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    // ── Drag-to-scroll for all galleries ──
+    document.querySelectorAll('.ss-gallery').forEach(gallery => {
+      let isDown = false;
+      let startX, scrollLeft, dragDistance = 0;
+
+      gallery.addEventListener('mousedown', e => {
+        isDown = true;
+        dragDistance = 0;
+        gallery.classList.add('dragging');
+        startX = e.clientX;
+        scrollLeft = gallery.scrollLeft;
+        e.preventDefault();
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (!isDown) return;
+        isDown = false;
+        gallery.classList.remove('dragging');
+      });
+
+      window.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        const dx = e.clientX - startX;
+        dragDistance = Math.abs(dx);
+        gallery.scrollLeft = scrollLeft - dx;
+      });
+
+      // Block lightbox if dragged more than 5px
+      gallery.querySelectorAll('img').forEach(img => {
+        img.addEventListener('click', e => {
+          if (dragDistance > 5) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          }
+        }, true);
+      });
+    });
+
+    // ── Scroll reveal ──
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
+
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i % 5) * 0.07 + 's';
+      obs.observe(el);
+    });
+
+    // Also observe exp-cards and case-cards added dynamically
+    document.querySelectorAll('.exp-card, .case-card').forEach((c, i) => {
+      if (!c.classList.contains('reveal')) {
+        c.classList.add('reveal');
+      }
+      c.style.transitionDelay = (i % 4) * 0.08 + 's';
+      obs.observe(c);
+    });
+  </script>
+</body>
+
+</html>
